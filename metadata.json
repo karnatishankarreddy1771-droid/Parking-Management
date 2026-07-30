@@ -1,0 +1,6 @@
+{
+  "name": "Parking's",
+  "description": "Smart parking management platform for Residents, Security, and Admins.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
