@@ -43,10 +43,15 @@ export const AdminDashboard: React.FC = () => {
   const [seedDone, setSeedDone] = useState(false);
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1200);
+
     // Listen to real-time slots
     const unsubSlots = parkingService.listenToSlots((data) => {
       setSlots(data);
       setLoading(false);
+      clearTimeout(timer);
     });
 
     // Listen to users
@@ -60,9 +65,10 @@ export const AdminDashboard: React.FC = () => {
     });
 
     return () => {
-      unsubSlots();
-      unsubUsers();
-      unsubViolations();
+      clearTimeout(timer);
+      if (typeof unsubSlots === 'function') unsubSlots();
+      if (typeof unsubUsers === 'function') unsubUsers();
+      if (typeof unsubViolations === 'function') unsubViolations();
     };
   }, []);
 

@@ -63,6 +63,7 @@ export const bookingService = {
       },
       (error) => {
         handleFirestoreError(error, OperationType.LIST, BOOKINGS_COLLECTION);
+        callback([]);
       }
     );
   },
@@ -77,6 +78,7 @@ export const bookingService = {
       },
       (error) => {
         handleFirestoreError(error, OperationType.LIST, BOOKINGS_COLLECTION);
+        callback([]);
       }
     );
   },
@@ -104,6 +106,7 @@ export const bookingService = {
       },
       (error) => {
         handleFirestoreError(error, OperationType.LIST, BOOKINGS_COLLECTION);
+        callback([]);
       }
     );
   },

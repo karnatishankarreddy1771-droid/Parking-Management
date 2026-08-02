@@ -38,6 +38,7 @@ export const notificationService = {
       },
       (error) => {
         handleFirestoreError(error, OperationType.LIST, NOTIFICATIONS_COLLECTION);
+        callback([]);
       }
     );
   },

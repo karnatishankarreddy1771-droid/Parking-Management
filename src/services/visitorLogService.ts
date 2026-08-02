@@ -52,6 +52,7 @@ export const visitorLogService = {
       },
       (error) => {
         handleFirestoreError(error, OperationType.LIST, LOGS_COLLECTION);
+        callback([]);
       }
     );
   },

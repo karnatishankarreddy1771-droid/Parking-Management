@@ -50,6 +50,7 @@ export const violationService = {
       },
       (error) => {
         handleFirestoreError(error, OperationType.LIST, VIOLATIONS_COLLECTION);
+        callback([]);
       }
     );
   },

@@ -35,10 +35,15 @@ export const SecurityDashboard: React.FC = () => {
   const [searched, setSearched] = useState(false);
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1200);
+
     // Realtime listener for today's bookings
     const unsubscribeBookings = bookingService.listenToTodayBookings((data) => {
       setTodayBookings(data);
       setLoading(false);
+      clearTimeout(timer);
     });
 
     // Realtime listener for visitor logs
@@ -52,9 +57,10 @@ export const SecurityDashboard: React.FC = () => {
     });
 
     return () => {
-      unsubscribeBookings();
-      unsubscribeLogs();
-      unsubscribeViolations();
+      clearTimeout(timer);
+      if (typeof unsubscribeBookings === 'function') unsubscribeBookings();
+      if (typeof unsubscribeLogs === 'function') unsubscribeLogs();
+      if (typeof unsubscribeViolations === 'function') unsubscribeViolations();
     };
   }, []);
 

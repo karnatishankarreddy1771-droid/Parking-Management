@@ -69,6 +69,7 @@ export const userService = {
       },
       (error) => {
         handleFirestoreError(error, OperationType.LIST, USERS_COLLECTION);
+        callback([]);
       }
     );
   },

@@ -36,6 +36,7 @@ export const parkingService = {
       },
       (error) => {
         handleFirestoreError(error, OperationType.LIST, SLOTS_COLLECTION);
+        callback([]);
       }
     );
   },

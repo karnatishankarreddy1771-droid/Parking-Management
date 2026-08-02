@@ -29,14 +29,21 @@ export const ResidentDashboard: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    if (!userProfile?.uid) return;
+    if (!userProfile?.uid) {
+      setLoading(false);
+      return;
+    }
 
     setLoading(true);
+
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1200);
 
     // Fetch assigned slot
     parkingService.getResidentSlot(userProfile.uid).then(slot => {
       setAssignedSlot(slot);
-    });
+    }).catch(() => {});
 
     // Realtime listen to resident bookings
     const unsubscribeBookings = bookingService.listenToUserBookings(
@@ -44,6 +51,7 @@ export const ResidentDashboard: React.FC = () => {
       (bookingsList) => {
         setActiveBookings(bookingsList);
         setLoading(false);
+        clearTimeout(timer);
       }
     );
 
@@ -56,8 +64,9 @@ export const ResidentDashboard: React.FC = () => {
     );
 
     return () => {
-      unsubscribeBookings();
-      unsubscribeVehicles();
+      clearTimeout(timer);
+      if (typeof unsubscribeBookings === 'function') unsubscribeBookings();
+      if (typeof unsubscribeVehicles === 'function') unsubscribeVehicles();
     };
   }, [userProfile?.uid]);
 

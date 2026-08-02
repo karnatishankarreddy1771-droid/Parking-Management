@@ -15,10 +15,12 @@ import {
   ArrowRight, 
   CheckCircle2, 
   RefreshCw,
-  Send
+  Send,
+  Database
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { UserRole } from '../types';
+import { FirebaseSetupModal } from '../components/common/FirebaseSetupModal';
 
 const registerSchema = z.object({
   name: z.string().min(2, 'Full name must be at least 2 characters'),
@@ -53,6 +55,7 @@ export const RegisterPage: React.FC = () => {
   const [resendingEmail, setResendingEmail] = useState(false);
   const [resendNotice, setResendNotice] = useState<string | null>(null);
   const [checkingVerification, setCheckingVerification] = useState(false);
+  const [showConfigModal, setShowConfigModal] = useState(false);
 
   const {
     register,
@@ -362,6 +365,16 @@ export const RegisterPage: React.FC = () => {
             </p>
           </div>
 
+          <div className="mt-4 text-center">
+            <button
+              onClick={() => setShowConfigModal(true)}
+              className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-300 transition-colors"
+            >
+              <Database className="w-3.5 h-3.5 text-indigo-400" />
+              Configure Firebase SDK Credentials
+            </button>
+          </div>
+
         </div>
 
         <div className="mt-6 text-center">
@@ -369,6 +382,11 @@ export const RegisterPage: React.FC = () => {
             ← Back to Landing Page
           </Link>
         </div>
+
+        <FirebaseSetupModal
+          isOpen={showConfigModal}
+          onClose={() => setShowConfigModal(false)}
+        />
       </div>
     </div>
   );

@@ -36,6 +36,7 @@ export const vehicleService = {
       },
       (error) => {
         handleFirestoreError(error, OperationType.LIST, VEHICLES_COLLECTION);
+        callback([]);
       }
     );
   },
